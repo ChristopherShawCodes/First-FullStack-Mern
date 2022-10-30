@@ -59,9 +59,13 @@ Create Controller File ( Ex: person.controller.js )
 Add Code/Setup:
 
 `module.exports.index = (request,response) =>{ //Exporting a key:val pair of index:function
+
 response.json({                      // this is where we're setting the API's response to the requesting client
+
 message:"hello world"
+
 })
+
 }`
 
 ------------------------------------------
@@ -75,7 +79,9 @@ Add Code/Setup:
 `const PersonController = require('../controllers/person.controller') // Here we are importing logic from controller file
 
 module.exports = (app) =>{
+
 app.get('/api', PersonController.index)
+
 }`
 
 ------------------------------------------
@@ -118,21 +124,36 @@ Create Components For Application
 Example Person Component:
 
 `import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-const PersonForm= () => {
+
+    import axios from 'axios';
+    
+    const PersonForm= () => {
+    
     const [ message, setMessage ] = useState("Loading...")
+    
     useEffect(()=>{
+    
         axios.get("http://localhost:8000/api")
+        
             .then(res=>setMessage(res.data.message))
+            
             .catch(err=>console.log(err))
+            
     }, []);
+    
     return (
+    
         <div>
+        
             <h2>Message from the backend: {message}</h2>
+            
         </div>
+        
     )
-}
-export default PersonForm;`
+    
+    }
+    
+    export default PersonForm;`
 
 ------------------------------------------
 
@@ -140,16 +161,25 @@ Navigate To App.Js and IMPORT the components
 
 Example:
 
-`import React from 'react';
-import PersonForm from './components/PersonForm';
-function App() {
-  return (
+    `import React from 'react';
+    
+    import PersonForm from './components/PersonForm';
+    
+    function App() {
+    
+     return (
+     
     <div className="App">
+    
       <PersonForm/>
+      
     </div>
-  );
-}
-export default App;`
+    
+     );
+     
+    }
+    
+    export default App;`
 
 ------------------------------------------
 
@@ -176,17 +206,18 @@ Install the ability to make cross-origin requests
 stop the nodemon server.js server with CONTROL C
 
 run:
-npm install cors
+
+`npm install cors`
 
 
 add needed CORS code to SERVER.JS
 
-const cors = require('cors')
-app.use(cors())
+`const cors = require('cors')`
+`app.use(cors())`
 
 ------------------------------------------
 
-run: nodemon server.js
+run: `nodemon server.js`
 
 
 

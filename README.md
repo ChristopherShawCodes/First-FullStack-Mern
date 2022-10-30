@@ -161,7 +161,7 @@ Navigate To App.Js and IMPORT the components
 
 Example:
 
-    `import React from 'react';
+        `import React from 'react';
     
     import PersonForm from './components/PersonForm';
     

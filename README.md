@@ -58,15 +58,15 @@ Create Controller File ( Ex: person.controller.js )
 
 Add Code/Setup:
 
-`module.exports.index = (request,response) =>{ //Exporting a key:val pair of index:function
+    `module.exports.index = (request,response) =>{ //Exporting a key:val pair of index:function
 
-response.json({                      // this is where we're setting the API's response to the requesting client
+    response.json({                      // this is where we're setting the API's response to the requesting client
 
-message:"hello world"
+    message:"hello world"
 
-})
+    })
 
-}`
+    }`
 
 ------------------------------------------
 
@@ -76,13 +76,13 @@ Create Route File ( Ex: person.routes.js )
 
 Add Code/Setup:
 
-`const PersonController = require('../controllers/person.controller') // Here we are importing logic from controller file
+    `const PersonController = require('../controllers/person.controller') // Here we are importing logic from       controller file
 
-module.exports = (app) =>{
+    module.exports = (app) =>{
 
-app.get('/api', PersonController.index)
+    app.get('/api', PersonController.index)
 
-}`
+    }`
 
 ------------------------------------------
 

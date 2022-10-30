@@ -10,18 +10,20 @@ create server.js file
 ------------------------------------------
 run in terminal:
 
-npm init -y
-npm install express
-npm install mongoose
+`npm init -y`
+
+`npm install express`
+
+`npm install mongoose`
 
 ------------------------------------------
 Add to Server.js file:
 
-const express = require('express')
-const app = express()
-const port = 8000
+`const express = require('express')`
+`const app = express()`
+`const port = 8000`
 
-app.listen(port, () => console.log(`Listening on port: ${port}`))
+`app.listen(port, () => console.log(`Listening on port: ${port}`))`
 
 ------------------------------------------
 

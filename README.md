@@ -278,10 +278,10 @@ Now in the controller we can add a new method to handle the creation of Person
  
  Add:
  
-    `const Person = require('../models/person.model')`
+     const Person = require('../models/person.model')
  
  
-    `module.exports.createPerson = (request, response) => {
+    module.exports.createPerson = (request, response) => {
     
     // Mongoose's "create" method is run using our Person model to add a new person to our db's person collection.
     
@@ -293,7 +293,7 @@ Now in the controller we can add a new method to handle the creation of Person
         
         .catch(err => response.json(err));
         
-}`
+    }
 
 ------------------------------------------
 
@@ -355,26 +355,47 @@ Create a form to provide info to the back end
 
 Example:
 
-`import React, { useState } from 'react'
-import axios from 'axios';
-const PersonForm = () => {
+    import React, { useState } from 'react'
+    
+    import axios from 'axios';
+    
+    const PersonForm = () => {
+    
     //keep track of what is being typed via useState hook
+    
     const [firstName, setFirstName] = useState(""); 
+    
     const [lastName, setLastName] = useState("");
+    
     //handler when the form is submitted
+    
     const onSubmitHandler = (e) => {
+    
         //prevent default behavior of the submit
+        
         e.preventDefault();
+        
         //make a post request to create a new person
+        
         axios.post('http://localhost:8000/api/people', {
+        
             firstName,    // this is shortcut syntax for firstName: firstName,
+            
             lastName      // this is shortcut syntax for lastName: lastName
+            
         })
+        
             .then(res=>{
+            
+                
                 console.log(res); // always console log to get used to tracking your data!
+                
                 console.log(res.data);
+                
             })
+            
             .catch(err=>console.log(err))
+            
     }
     
     return (

@@ -20,7 +20,9 @@ run in terminal:
 Add to Server.js file:
 
 `const express = require('express')`
+
 `const app = express()`
+
 `const port = 8000`
 
 `app.listen(port, () => console.log(`Listening on port: ${port}`))`
@@ -30,19 +32,23 @@ Add to Server.js file:
 Create 4 folders:
 
 Config
+
 Controllers
+
 Models
+
 Routes
 
 ------------------------------------------
 
 Navigate to main folder
+
 cd ..
 
 ------------------------------------------
 Create React App
 
-npm create-react-app client
+`npm create-react-app client`
 
 ------------------------------------------
 
@@ -79,8 +85,10 @@ Link Routes To Server.js
 `require('./routes/person.routes')(app)`
 
 // These two lines are the long-hand notation of the code above. They better show what's going on.
-    // const personRoutes = require("./routes/person.routes");  <-- assign the exported function to a const
-    // personRoutes(app);     <-- invoke the function and pass in the express "app" server
+
+// const personRoutes = require("./routes/person.routes");  <-- assign the exported function to a const
+    
+// personRoutes(app);     <-- invoke the function and pass in the express "app" server
 
 ------------------------------------------
 ------------------------------------------

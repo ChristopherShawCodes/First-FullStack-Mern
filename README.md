@@ -220,5 +220,184 @@ add needed CORS code to SERVER.JS
 run: `nodemon server.js`
 
 
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+
+Update Back-End
+
+we need to configure the database
+
+Navigate to the Config Folder
+
+Create: `mongoose.config.js`
+
+------------------------------------------
+
+Add to mongoose.config.js file
+
+`const mongoose = require('mongoose');
+//This will create a database named "person" if one doesn't already exist (no need for mongo shell!):
+mongoose.connect("mongodb://localhost/person", { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true,
+})
+    .then(() => console.log("Established a connection to the database"))
+    .catch(err => console.log("Something went wrong when connecting to the database", err));`
+    
+    
+ ------------------------------------------
+ Create Model File 
+ 
+ Create Schema / Model
+ 
+ Example: 
+ 
+ `const mongoose = require('mongoose')`
+ 
+    `const PersonSchema = new mongoose.Schema({
+    
+    firstName: {type: String},
+    
+    lastName: {type: String}
+    
+    },
+    
+    {timestamps: true})
+    
+    module.exports = mongoose.model('Person', PersonSchema)`
+    
+------------------------------------------
+
+Now in the controller we can add a new method to handle the creation of Person
+
+ ------------------------------------------
+ 
+ server/controller/person.controller.js file
+ 
+ Add:
+ 
+    `const Person = require('../models/person.model')`
+ 
+ 
+    `module.exports.createPerson = (request, response) => {
+    
+    // Mongoose's "create" method is run using our Person model to add a new person to our db's person collection.
+    
+    // request.body will contain something like {firstName: "Billy", lastName: "Washington"} from the client
+    
+    Person.create(request.body) //This will use whatever the body of the client's request sends over
+    
+        .then(person => response.json(person))
+        
+        .catch(err => response.json(err));
+        
+}`
+
+------------------------------------------
+
+Update the routes
+
+server/routes/person.routes.js
+
+Add:
+
+`app.post('/api/people', PersonController.createPerson)`
+
+------------------------------------------
+
+In order to process POST requests add code to Server.js File
+
+server/server.js
+
+`app.use(express.json())`
+
+this allows json objects to be posted
+
+`app.use(express.urlencoded({ extended: true}))`
+
+this allows json objects with strings and arrays
+
+`require(./config/mongoose.config')`
+
+this imports the config file
+
+------------------------------------------
+------------------------------------------
+------------------------------------------
+
+Now Navigate to POSTMAN
+
+From here we can input data
+
+Settings:
+
+POST localhost:8000/api/__________
+
+Click : BODY
+
+Change DROPDOWN :  x-www-form-urlencoded
+
+Add KEYS and VALUES according to the schema created in the MODEL file.
+
+------------------------------------------
+
+Confirm BACK-END works ! 
+
+------------------------------------------
+
+UPDATE FRONT-END
+
+Navigate to COMPONENTS Folder
+
+Create a form to provide info to the back end
+
+Example:
+
+`import React, { useState } from 'react'
+import axios from 'axios';
+const PersonForm = () => {
+    //keep track of what is being typed via useState hook
+    const [firstName, setFirstName] = useState(""); 
+    const [lastName, setLastName] = useState("");
+    //handler when the form is submitted
+    const onSubmitHandler = (e) => {
+        //prevent default behavior of the submit
+        e.preventDefault();
+        //make a post request to create a new person
+        axios.post('http://localhost:8000/api/people', {
+            firstName,    // this is shortcut syntax for firstName: firstName,
+            lastName      // this is shortcut syntax for lastName: lastName
+        })
+            .then(res=>{
+                console.log(res); // always console log to get used to tracking your data!
+                console.log(res.data);
+            })
+            .catch(err=>console.log(err))
+    }
+    
+    return (
+        <form onSubmit={onSubmitHandler}>
+            <p>
+                <label>First Name</label><br/>
+                {/* When the user types in this input, our onChange synthetic event 
+                    runs this arrow function, setting that event's target's (input) 
+                    value (what's typed into the input) to our updated state   */}
+                <input type="text" onChange = {(e)=>setFirstName(e.target.value)}/>
+            </p>
+            <p>
+                <label>Last Name</label><br/>
+                <input type="text" onChange = {(e)=>setLastName(e.target.value)}/>
+            </p>
+            <input type="submit"/>
+        </form>
+    )
+}
+export default PersonForm;`
+
+
+
+
 
 

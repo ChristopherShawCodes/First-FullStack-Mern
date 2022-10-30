@@ -1,70 +1,183 @@
-# Getting Started with Create React App
+First Full Stack MERN/ JS Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Startup Notes:
 
-## Available Scripts
+create main project folder
+------------------------------------------
+create server folder
+------------------------------------------
+create server.js file
+------------------------------------------
+run in terminal:
 
-In the project directory, you can run:
+npm init -y
+npm install express
+npm install mongoose
 
-### `npm start`
+------------------------------------------
+Add to Server.js file:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+const express = require('express')
+const app = express()
+const port = 8000
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+app.listen(port, () => console.log(`Listening on port: ${port}`))
 
-### `npm test`
+------------------------------------------
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create 4 folders:
 
-### `npm run build`
+Config
+Controllers
+Models
+Routes
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+------------------------------------------
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Navigate to main folder
+cd ..
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+------------------------------------------
+Create React App
 
-### `npm run eject`
+npm create-react-app client
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+------------------------------------------
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Navigate to Controller Folder
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Create Controller File ( Ex: person.controller.js )
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Add Code/Setup:
 
-## Learn More
+`module.exports.index = (request,response) =>{ //Exporting a key:val pair of index:function
+response.json({                      // this is where we're setting the API's response to the requesting client
+message:"hello world"
+})
+}`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+------------------------------------------
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Navigate to Routes Folder
 
-### Code Splitting
+Create Route File ( Ex: person.routes.js )
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Add Code/Setup:
 
-### Analyzing the Bundle Size
+`const PersonController = require('../controllers/person.controller') // Here we are importing logic from controller file
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+module.exports = (app) =>{
+app.get('/api', PersonController.index)
+}`
 
-### Making a Progressive Web App
+------------------------------------------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Link Routes To Server.js
 
-### Advanced Configuration
+`require('./routes/person.routes')(app)`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+// These two lines are the long-hand notation of the code above. They better show what's going on.
+    // const personRoutes = require("./routes/person.routes");  <-- assign the exported function to a const
+    // personRoutes(app);     <-- invoke the function and pass in the express "app" server
 
-### Deployment
+------------------------------------------
+------------------------------------------
+------------------------------------------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Back-End Setup ! Moving To Front-End
+------------------------------------------
 
-### `npm run build` fails to minify
+Navigate To Client Folder In Terminal
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+cd client
+
+------------------------------------------
+
+Import Axios
+
+`npm install axios`
+
+------------------------------------------
+
+Create COMPONENTS Folder ( Client -> SRC -> Components )
+
+------------------------------------------
+
+Create Components For Application
+
+Example Person Component:
+
+`import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+const PersonForm= () => {
+    const [ message, setMessage ] = useState("Loading...")
+    useEffect(()=>{
+        axios.get("http://localhost:8000/api")
+            .then(res=>setMessage(res.data.message))
+            .catch(err=>console.log(err))
+    }, []);
+    return (
+        <div>
+            <h2>Message from the backend: {message}</h2>
+        </div>
+    )
+}
+export default PersonForm;`
+
+------------------------------------------
+
+Navigate To App.Js and IMPORT the components
+
+Example:
+
+`import React from 'react';
+import PersonForm from './components/PersonForm';
+function App() {
+  return (
+    <div className="App">
+      <PersonForm/>
+    </div>
+  );
+}
+export default App;`
+
+------------------------------------------
+
+START BACK-END SERVER
+
+cd server folder
+
+nodemon server.js 
+
+------------------------------------------
+
+START FRONT-END REACT APP
+
+OPEN new terminal
+
+cd client
+
+npm run start
+
+------------------------------------------
+
+Install the ability to make cross-origin requests
+
+stop the nodemon server.js server with CONTROL C
+
+run:
+npm install cors
+
+
+add needed CORS code to SERVER.JS
+
+const cors = require('cors')
+app.use(cors())
+
+------------------------------------------
+
+run: nodemon server.js
+
+
+
+

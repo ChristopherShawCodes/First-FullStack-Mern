@@ -237,14 +237,14 @@ Create: `mongoose.config.js`
 
 Add to mongoose.config.js file
 
-`const mongoose = require('mongoose');
-//This will create a database named "person" if one doesn't already exist (no need for mongo shell!):
-mongoose.connect("mongodb://localhost/person", { 
+    const mongoose = require('mongoose');
+    //This will create a database named "person" if one doesn't already exist (no need for      mongo shell!):
+    mongoose.connect("mongodb://localhost/person", { 
     useNewUrlParser: true, 
     useUnifiedTopology: true,
-})
+    })
     .then(() => console.log("Established a connection to the database"))
-    .catch(err => console.log("Something went wrong when connecting to the database", err));`
+    .catch(err => console.log("Something went wrong when connecting to the database",           err));
     
     
  ------------------------------------------
@@ -254,9 +254,9 @@ mongoose.connect("mongodb://localhost/person", {
  
  Example: 
  
- `const mongoose = require('mongoose')`
+    const mongoose = require('mongoose')
  
-    `const PersonSchema = new mongoose.Schema({
+    const PersonSchema = new mongoose.Schema({
     
     firstName: {type: String},
     
@@ -266,7 +266,7 @@ mongoose.connect("mongodb://localhost/person", {
     
     {timestamps: true})
     
-    module.exports = mongoose.model('Person', PersonSchema)`
+    module.exports = mongoose.model('Person', PersonSchema)
     
 ------------------------------------------
 
@@ -414,8 +414,8 @@ Example:
             <input type="submit"/>
         </form>
     )
-}
-export default PersonForm;`
+    }
+    export default PersonForm;`
 
 
 
